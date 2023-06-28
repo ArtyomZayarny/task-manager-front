@@ -5,7 +5,7 @@ import { Dialog } from "@headlessui/react";
 import React, { useContext, useState } from "react";
 import { Button } from "./Button";
 import { REQUEST_LOGIN, REQUEST_REGISTER } from "@/requests";
-import { AuthRequest, setAccessTokenToLS, storeToLS } from "@/utils";
+import { AuthRequest, storeToLS } from "@/utils";
 import { Input } from "./Input";
 import { ErrorMessage } from "./Error";
 import { Congrats } from "./Congrats";
