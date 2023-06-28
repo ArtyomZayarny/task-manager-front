@@ -1,11 +1,9 @@
-//import { databases } from "@/appwrite";
-
 import { REQUEST_TASK } from "@/requests";
-import { Board, Column, TypedColumn } from "@/types";
+import { Board, IColumn, TypedColumn } from "@/types";
 
 export const getTodosGroupedByColumn = async () => {
- const userId = JSON.parse(localStorage.getItem('userId'));
- const token = JSON.parse(localStorage.getItem('access_token'));
+ const userId = JSON.parse(localStorage.getItem('userId')!);
+ const token = JSON.parse(localStorage.getItem('access_token')!);
 
  let todos = [];
 
@@ -24,7 +22,7 @@ export const getTodosGroupedByColumn = async () => {
  }
 
 
-  const columns = todos.reduce((acc, todo) => {
+  const columns = todos.reduce((acc:any, todo:any) => {
     if (!acc.get(todo.status)) {
       acc.set(todo.status, {
         id: todo.status,
@@ -39,7 +37,7 @@ export const getTodosGroupedByColumn = async () => {
       ...(todo.image && { image: todo.image }),
     });
     return acc;
-  }, new Map<TypedColumn, Column>());
+  }, new Map<TypedColumn, IColumn>());
 
   //Add empty todos
   const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
@@ -52,11 +50,8 @@ export const getTodosGroupedByColumn = async () => {
     }
   }
   //Sort column
-  const sortedColumns = new Map(
-    Array.from(columns.entries()).sort(
-      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])
-    )
-  );
+  const sortedColumns = new Map(Array.from(columns.entries()).sort((a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])));
+  
   const board: Board = {
     columns: sortedColumns,
   };
