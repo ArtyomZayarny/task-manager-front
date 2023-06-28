@@ -1,7 +1,7 @@
 "use client";
 
 import { getTodosGroupedByColumn } from "@/lib/getTodosGroupedByColumn";
-import { Board, Column, TypedColumn } from "@/types";
+import { Board, IColumn, TypedColumn } from "@/types";
 import React, { createContext, useEffect, useState } from "react";
 
 type AppContextType = {
@@ -32,7 +32,7 @@ type Props = {
 };
 
 const initialBoard = {
-  columns: new Map<TypedColumn, Column>(),
+  columns: new Map<TypedColumn, IColumn>(),
 };
 
 export const AppContextProvider = ({ children }: Props) => {
