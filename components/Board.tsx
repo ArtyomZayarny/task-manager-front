@@ -5,6 +5,8 @@ import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import Column from "./Column";
 import { AppContext } from "@/context/app-context";
 import { TaskContext } from "@/context/task-context";
+import { IColumn } from "@/types";
+
 
 export default function Board() {
   const { board,setBoard } = useContext(AppContext);
@@ -30,12 +32,12 @@ export default function Board() {
     const startColIndex = columns[Number(source.droppableId)];
     const finisheColIndex = columns[Number(destination.droppableId)];
 
-    const startCol: Column = {
+    const startCol:IColumn = {
       id: startColIndex[0],
       todos: startColIndex[1].todos,
     };
 
-    const finishCol: Column = {
+    const finishCol: IColumn = {
       id: finisheColIndex[0],
       todos: finisheColIndex[1].todos,
     };

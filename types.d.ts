@@ -9,12 +9,12 @@ export type UserCreads = {
 };
 
 interface Board {
-  columns: Map<TypedColumn, Column>;
+  columns: Map<TypedColumn, IColumn>;
 }
 
 type TypedColumn = "todo" | "inprogress" | "done";
 
-interface Column {
+interface IColumn {
   id: TypedColum;
   todos: Todo[];
 }
