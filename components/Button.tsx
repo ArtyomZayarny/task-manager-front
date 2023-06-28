@@ -1,10 +1,13 @@
 import { AppContext } from "@/context/app-context";
-import { useContext } from "react";
+import { ButtonHTMLAttributes, DetailedHTMLProps, useContext } from "react";
+
+
+
 
 type Props = {
   text: string;
   color: string;
-  type: string;
+  type:any;
   withLoading?: boolean;
   toggleModalTypeHandler?: () => void;
 };
