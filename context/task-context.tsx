@@ -31,7 +31,8 @@ export const TaskContextProvider = ({ children }: Props) => {
   const [newTaskInput, setNewTaskInput] = useState("");
   const [newTaskType, setNewTaskType] = useState("todo");
   const [image, setImage] = useState(null);
-  const userId = JSON.parse(localStorage.getItem("userId")!);
+  
+  const userId = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem("userId")! : null!);
 
   const addTask = async (title:string, status:string, image?:File | null) => {
     let file = null;
@@ -61,7 +62,7 @@ export const TaskContextProvider = ({ children }: Props) => {
     }
 
 
-    const token = JSON.parse(localStorage.getItem("access_token")!);
+    const token = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem("access_token")! : null!);
 
     // Add task request
     let newTask = {} as Todo;
@@ -92,7 +93,7 @@ export const TaskContextProvider = ({ children }: Props) => {
       await storage.deleteFile(todo.image.bucketId, todo.image.fileId);
     }
 
-    const token = JSON.parse(localStorage.getItem("access_token")!);
+    const token = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem("access_token")! : null!);
 
     await fetch(`${REQUEST_TASK}/${todo.id}`, {
       method: "DELETE",
@@ -107,7 +108,7 @@ export const TaskContextProvider = ({ children }: Props) => {
   const updateTodoInDB = async (id:string, status:TypedColumn) => {
 
 
-    const token = JSON.parse(localStorage.getItem("access_token")!);
+    const token = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem("access_token")! : null!);
 
 
     const request = await fetch(`${REQUEST_TASK}/${id}`, {
