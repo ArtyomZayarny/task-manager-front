@@ -1,8 +1,4 @@
-export const BASE_URL = "http://localhost";
-export const BASE_PORT = "3001";
-export const BASE_PREFIX = "api";
-
-export const BASE_API_STRING = `${BASE_URL}:${BASE_PORT}/${BASE_PREFIX}`;
+export const BASE_API_STRING = `https://task-manager-api-vz83.onrender.com`;
 
 export const AUTH = "auth";
 export const LOGIN = "login";
