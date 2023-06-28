@@ -41,6 +41,7 @@ export const getTodosGroupedByColumn = async () => {
 
   //Add empty todos
   const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
+
   for (const columnType of columnTypes) {
     if (!columns.get(columnType)) {
       columns.set(columnType, {
@@ -50,10 +51,16 @@ export const getTodosGroupedByColumn = async () => {
     }
   }
   //Sort column
-  const sortedColumns = new Map(Array.from(columns.entries()).sort((a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])));
+  const sortedColumns= new Map(
+    // @ts-ignore: Unreachable code error
+    Array.from(columns.entries()).sort(
+      // @ts-ignore: Unreachable code error
+      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])));
   
   const board: Board = {
     columns: sortedColumns,
-  };
+  }as unknown as Board;
+
   return board;
 };
+ 
