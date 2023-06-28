@@ -104,7 +104,7 @@ export const TaskContextProvider = ({ children }: Props) => {
     });
   };
 
-  const updateTodoInDB = async (id, status) => {
+  const updateTodoInDB = async (id:string, status:TypedColumn) => {
 
 
     const token = JSON.parse(localStorage.getItem("access_token")!);
