@@ -1,4 +1,5 @@
 import { storage } from "@/appwrite";
+import { Image } from "@/types";
 
 export const getUrl = async (image: Image | undefined) => {
   if (!image) return;
