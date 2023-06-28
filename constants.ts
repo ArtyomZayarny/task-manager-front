@@ -1,4 +1,4 @@
-export const BASE_API_STRING = `https://task-manager-api-vz83.onrender.com`;
+export const BASE_API_STRING = `https://task-manager-api-vz83.onrender.com/api`;
 
 export const AUTH = "auth";
 export const LOGIN = "login";
