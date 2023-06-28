@@ -46,6 +46,7 @@ export const TaskContextProvider = ({ children }: Props) => {
     } as unknown as Todo;
 
     //Upload image to appwrite
+    console.log('image', image)
     if(image) {
       try {
         const fileUploaded = await uploadImage(image);
