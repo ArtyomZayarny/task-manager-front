@@ -14,7 +14,7 @@ export const Header = () => {
     useContext(AppContext);
 
   return (
-    <div className="flex justify-between items-center p-5 bg-gray-500/10 mb-10">
+    <div className="flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl mb-10">
       <BackGround />
       <Logo />
 
