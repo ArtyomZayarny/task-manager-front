@@ -2,27 +2,25 @@ import { REQUEST_TASK } from "@/requests";
 import { Board, IColumn, TypedColumn } from "@/types";
 
 export const getTodosGroupedByColumn = async () => {
- const userId = JSON.parse(localStorage.getItem('userId')!);
- const token = JSON.parse(localStorage.getItem('access_token')!);
+  const userId = JSON.parse(localStorage.getItem("userId")!);
+  const token = JSON.parse(localStorage.getItem("access_token")!);
 
- let todos = [];
+  let todos = [];
 
- if(userId) {
-  const requestTasks = await fetch(`${REQUEST_TASK}/${userId}`,{
-    method:'GET',
-    mode:'cors',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
-    }
-  });
+  if (userId) {
+    const requestTasks = await fetch(`${REQUEST_TASK}/${userId}`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  todos = await requestTasks.json();
-  
- }
+    todos = await requestTasks.json();
+  }
 
-
-  const columns = todos.reduce((acc:any, todo:any) => {
+  const columns = todos.reduce((acc: any, todo: any) => {
     if (!acc.get(todo.status)) {
       acc.set(todo.status, {
         id: todo.status,
@@ -51,16 +49,17 @@ export const getTodosGroupedByColumn = async () => {
     }
   }
   //Sort column
-  const sortedColumns= new Map(
+  const sortedColumns = new Map(
     // @ts-ignore: Unreachable code error
     Array.from(columns.entries()).sort(
       // @ts-ignore: Unreachable code error
-      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])));
-  
+      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])
+    )
+  );
+
   const board: Board = {
     columns: sortedColumns,
-  }as unknown as Board;
+  } as unknown as Board;
 
   return board;
 };
- 

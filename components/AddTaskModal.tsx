@@ -1,12 +1,7 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import React, {
-  FormEvent,
-  Fragment,
-  useContext,
-  useRef,
-} from "react";
+import React, { FormEvent, Fragment, useContext, useRef } from "react";
 import TaskTypeRadio from "./TaskTypeRadio";
 import Image from "next/image";
 import { PhotoIcon } from "@heroicons/react/24/solid";
@@ -16,7 +11,8 @@ import { Board, Todo, TypedColumn } from "@/types";
 
 export default function AddTaskModal() {
   const imagePickerRef = useRef<HTMLInputElement>(null);
-  const { showAddTaskModal, setShowAddTaskModal,setBoard, board } = useContext(AppContext);
+  const { showAddTaskModal, setShowAddTaskModal, setBoard, board } =
+    useContext(AppContext);
   const {
     newTaskInput,
     setNewTaskInput,
@@ -26,8 +22,11 @@ export default function AddTaskModal() {
     newTaskType,
   } = useContext(TaskContext);
 
-
-  const updateBoard = async(board:Board,status:TypedColumn,newTask:Todo) =>{
+  const updateBoard = async (
+    board: Board,
+    status: TypedColumn,
+    newTask: Todo
+  ) => {
     const newColumns = new Map(board.columns);
 
     const column = newColumns.get(status);
@@ -41,31 +40,38 @@ export default function AddTaskModal() {
       newColumns.get(status)?.todos.push(newTask);
     }
     const updatedBoard = {
-        columns: newColumns,
-      }
-      return await setBoard(updatedBoard);
-  }
+      columns: newColumns,
+    };
+    return await setBoard(updatedBoard);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newTaskInput) return;
     //add task
-    const savedTask = await addTask(newTaskInput, newTaskType, image)
+    const savedTask = await addTask(newTaskInput, newTaskType, image);
+
+    const newTodo: Todo = {
+      id: savedTask._id!,
+      createdAt: savedTask.createdAt,
+      title: savedTask.title,
+      status: savedTask.status,
+      ...(savedTask?.image && { image: savedTask.image }),
+    };
 
     //Update board
-    await updateBoard(board,newTaskType,savedTask);
+    await updateBoard(board, newTaskType, newTodo);
 
-    setShowAddTaskModal(false)
-    setNewTaskInput('')
-    setImage(null)
-    
+    setShowAddTaskModal(false);
+    setNewTaskInput("");
+    setImage(null);
   };
 
   return (
     <Transition appear show={showAddTaskModal} as={Fragment}>
       <Dialog
         as="form"
-        encType='multipart/form-data'
+        encType="multipart/form-data"
         onSubmit={handleSubmit}
         onClose={() => setShowAddTaskModal(false)}
         className="relative z-10"

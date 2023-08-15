@@ -26,6 +26,7 @@ interface Image {
 
 interface Todo {
   id: string;
+  _id?: string | undefined;
   createdAt: string;
   title: string;
   status: string;
