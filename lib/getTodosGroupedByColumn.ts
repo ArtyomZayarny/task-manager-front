@@ -2,8 +2,14 @@ import { REQUEST_TASK } from "@/requests";
 import { Board, IColumn, TypedColumn } from "@/types";
 
 export const getTodosGroupedByColumn = async () => {
-  const userId = JSON.parse(localStorage.getItem("userId")!);
-  const token = JSON.parse(localStorage.getItem("access_token")!);
+  const userId =
+    localStorage.getItem("userId") !== "undefined"
+      ? JSON.parse(localStorage.getItem("userId")!)
+      : null;
+  const token =
+    localStorage.getItem("userId") !== "undefined"
+      ? JSON.parse(localStorage.getItem("access_token")!)
+      : null;
 
   let todos = [];
 

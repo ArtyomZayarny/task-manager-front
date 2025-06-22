@@ -30,9 +30,10 @@ export const TaskContextProvider = ({ children }: Props) => {
   const [newTaskType, setNewTaskType] = useState("todo");
   const [image, setImage] = useState(null);
 
-  const userId = JSON.parse(
-    typeof window !== "undefined" ? localStorage.getItem("userId")! : null!
-  );
+  let userId =
+    localStorage.getItem("userId") !== "undefined"
+      ? localStorage.getItem("userId")
+      : null;
 
   const addTask = async (
     title: string,

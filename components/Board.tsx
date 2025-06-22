@@ -88,7 +88,14 @@ export default function Board() {
 
   return (
     <DragDropContext onDragEnd={handleOnDrugEnd}>
-      <Droppable droppableId="board" direction="horizontal" type="column">
+      <Droppable
+        droppableId="board"
+        direction="horizontal"
+        type="column"
+        isDropDisabled={false}
+        isCombineEnabled={false}
+        ignoreContainerClipping={false}
+      >
         {(provided) => (
           <div
             className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto "
