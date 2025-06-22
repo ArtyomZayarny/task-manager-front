@@ -1,6 +1,6 @@
 "use client";
 import { CREATE_TASK, REQUEST_TASK } from "@/requests";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { AppContext } from "./app-context";
 import { uploadImage } from "@/lib/uploadImage";
 import { storage } from "@/appwrite";
@@ -29,11 +29,15 @@ export const TaskContextProvider = ({ children }: Props) => {
   const [newTaskInput, setNewTaskInput] = useState("");
   const [newTaskType, setNewTaskType] = useState("todo");
   const [image, setImage] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [userID, setUserID] = useState<string | null>(null);
 
-  let userId =
-    localStorage.getItem("userId") !== "undefined"
-      ? localStorage.getItem("userId")
-      : null;
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const accessToken = localStorage.getItem("access_token");
+    setToken(accessToken);
+    setUserID(userId);
+  }, []);
 
   const addTask = async (
     title: string,
@@ -46,7 +50,7 @@ export const TaskContextProvider = ({ children }: Props) => {
     const task = {
       title,
       status,
-      userId,
+      userId: JSON.parse(userID),
       image,
     } as unknown as Todo;
 
@@ -67,12 +71,6 @@ export const TaskContextProvider = ({ children }: Props) => {
       }
     }
 
-    const token = JSON.parse(
-      typeof window !== "undefined"
-        ? localStorage.getItem("access_token")!
-        : null!
-    );
-
     // Add task request
     let newTask = {} as Todo;
     try {
@@ -81,7 +79,7 @@ export const TaskContextProvider = ({ children }: Props) => {
         body: JSON.stringify(task),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${JSON.parse(token)}`,
         },
       });
       newTask = await request.json();
@@ -102,12 +100,6 @@ export const TaskContextProvider = ({ children }: Props) => {
       await storage.deleteFile(todo.image.bucketId, todo.image.fileId);
     }
 
-    const token = JSON.parse(
-      typeof window !== "undefined"
-        ? localStorage.getItem("access_token")!
-        : null!
-    );
-
     await fetch(`${REQUEST_TASK}/${todo.id}`, {
       method: "DELETE",
       mode: "cors",
@@ -119,12 +111,6 @@ export const TaskContextProvider = ({ children }: Props) => {
   };
 
   const updateTodoInDB = async (id: string, status: TypedColumn) => {
-    const token = JSON.parse(
-      typeof window !== "undefined"
-        ? localStorage.getItem("access_token")!
-        : null!
-    );
-
     const request = await fetch(`${REQUEST_TASK}/${id}`, {
       method: "PATCH",
       mode: "cors",
